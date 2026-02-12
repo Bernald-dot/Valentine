@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Be My Valentine ❤️</title>
+
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Segoe UI', sans-serif;
+        overflow: hidden;
+        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        color: white;
+        text-align: center;
+    }
+
+    .container {
+        background: rgba(0, 0, 0, 0.4);
+        padding: 40px;
+        border-radius: 20px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 0 40px rgba(255, 105, 180, 0.5);
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+        color: #ff69b4;
+    }
+
+    h2 {
+        margin-bottom: 30px;
+    }
+
+    button {
+        padding: 12px 30px;
+        font-size: 1.2rem;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        margin: 10px;
+        transition: 0.3s;
+    }
+
+    #yes {
+        background-color: #ff1493;
+        color: white;
+    }
+
+    #yes:hover {
+        transform: scale(1.1);
+        background-color: #ff69b4;
+    }
+
+    #no {
+        background-color: #1e90ff;
+        color: white;
+        position: relative;
+    }
+
+    .heart {
+        position: absolute;
+        font-size: 20px;
+        animation: float 6s linear infinite;
+        opacity: 0.8;
+    }
+
+    @keyframes float {
+        from { transform: translateY(100vh); }
+        to { transform: translateY(-10vh); }
+    }
+
+    .final-screen {
+        position: fixed;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-shadow: 2px 2px 10px black;
+    }
+
+    .overlay {
+        background: rgba(0, 0, 0, 0.5);
+        padding: 40px;
+        border-radius: 20px;
+    }
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Hey HILDAH Baby...💕</h1>
+    <h2>Will you be my Valentine?</h2>
+    <button id="yes">Yes 💖</button>
+    <button id="no">No 😢</button>
+</div>
+
+<script>
+    const noBtn = document.getElementById("no");
+    const yesBtn = document.getElementById("yes");
+
+    noBtn.addEventListener("mouseover", () => {
+        noBtn.style.position = "absolute";
+        noBtn.style.top = Math.random() * window.innerHeight + "px";
+        noBtn.style.left = Math.random() * window.innerWidth + "px";
+    });
+
+ yesBtn.addEventListener("click", () => {
+
+    document.body.innerHTML = `
+        <style>
+            body {
+                margin: 0;
+                overflow: hidden;
+                font-family: 'Segoe UI', sans-serif;
+                color: white;
+                text-align: center;
+            }
+
+            .final-screen {
+                position: fixed;
+                inset: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+            }
+
+            .slideshow {
+                position: absolute;
+                inset: 0;
+                z-index: -1;
+            }
+
+            .slide {
+                position: absolute;
+                inset: 0;
+                background-size: cover;
+                background-position: center;
+                opacity: 0;
+                transition: opacity 2s ease-in-out;
+            }
+
+            .slide.active {
+                opacity: 1;
+            }
+
+            .overlay {
+                background: rgba(0, 0, 0, 0.5);
+                padding: 40px;
+                border-radius: 20px;
+                text-shadow: 2px 2px 10px black;
+            }
+
+            .heart {
+                position: absolute;
+                font-size: 20px;
+                animation: float 6s linear infinite;
+                opacity: 0.8;
+            }
+
+            @keyframes float {
+                from { transform: translateY(100vh); }
+                to { transform: translateY(-10vh); }
+            }
+        </style>
+
+        <div class="final-screen">
+
+            <div class="slideshow">
+                <div class="slide active" style="background-image: url('us.jpg');"></div>
+                <div class="slide" style="background-image: url('us1.jpg');"></div>
+                <div class="slide" style="background-image: url('us2.jpg');"></div>
+                <div class="slide" style="background-image: url('us3.jpg');"></div>
+                <div class="slide" style="background-image: url('us4.jpg');"></div>
+                <div class="slide" style="background-image: url('us5.jpg');"></div>
+            </div>
+
+            <div class="overlay">
+                <h1>I’m the Luckiest Guy Alive 💖</h1>
+                <h2>Happy Valentine’s Kamum ❤️</h2>
+            </div>
+
+        </div>
+
+        <audio id="bgMusic" src="lazizi.mp3" loop></audio>
+    `;
+
+    // Start slideshow
+    const slides = document.querySelectorAll(".slide");
+    let index = 0;
+
+    setInterval(() => {
+        slides[index].classList.remove("active");
+        index = (index + 1) % slides.length;
+        slides[index].classList.add("active");
+    }, 5000);
+
+    // Floating hearts
+    setInterval(() => {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "💗";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = (Math.random() * 20 + 20) + "px";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 6000);
+    }, 300);
+
+    // Music fade-in starting at 46 seconds
+    const music = document.getElementById("bgMusic");
+    music.volume = 0;
+    music.currentTime = 14;   // change if needed
+    music.play();
+
+    let fadeInterval = setInterval(() => {
+        if (music.volume < 0.6) {
+            music.volume += 0.02;
+        } else {
+            clearInterval(fadeInterval);
+        }
+    }, 200);
+
+});
+
+    startHearts();
+
+    const music = document.getElementById("bgMusic");
+
+    // Wait until metadata loads before setting start time
+    music.addEventListener("loadedmetadata", () => {
+
+        music.currentTime = 0;  
+        
+
+        music.volume = 0;
+        music.play();
+
+        // Fade-in effect
+        let fadeInterval = setInterval(() => {
+            if (music.volume < 0.6) {
+                music.volume += 0.02;
+            } else {
+                clearInterval(fadeInterval);
+            }
+        }, 200);
+    });
+;
+
+    function startHearts() {
+        setInterval(() => {
+            const heart = document.createElement("div");
+            heart.classList.add("heart");
+            heart.innerHTML = "💗";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.fontSize = (Math.random() * 20 + 20) + "px";
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 6000);
+        }, 300);
+    }
+</script>
+
+</body>
+</html>
